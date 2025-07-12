@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 
-function PlantCard( { plant, onUpdatePlant } ) {
+function PlantCard( { plant, onUpdatePlant, onDeletePlant } ) {
   const { name, image } = plant;
   const [price, setPrice] = useState(plant.price)
   const [inStock, setInStock] = useState(true);
+
+  const handleDelete = () => {
+    fetch(`http://localhost:6001/plants/${plant.id}`, {
+      method: "DELETE"
+    })
+    .then(r => {
+      if (r.ok) {
+        onDeletePlant(plant.id);
+      } else {
+        alert("Failed to delete")
+      }
+    });
+  };
 
   const handlePriceChange = ((e) => {
     const newPrice = parseFloat(e.target.value);
@@ -37,6 +50,7 @@ function PlantCard( { plant, onUpdatePlant } ) {
       ) : (
         <button onClick={() => setInStock(true)}>Out of Stock</button>
       )}
+      <button className="delete-button" onClick={handleDelete}>Delete</button>
     </li>
   );
 }

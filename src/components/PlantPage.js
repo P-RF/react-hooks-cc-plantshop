@@ -6,6 +6,9 @@ import Search from "./Search";
 function PlantPage({ plants, setPlants }) {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const handleDeletePlant = (deletedPlantId) => {
+    setPlants(plants.filter(plant => plant.id !== deletedPlantId));
+  }
 
   const handleAddPlant = (newPlant) => {
     setPlants([...plants, newPlant])
@@ -21,7 +24,7 @@ function PlantPage({ plants, setPlants }) {
     <main>
       <NewPlantForm onAddPlant={handleAddPlant} />
       <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-      <PlantList plants={filteredPlants} onUpdatePlant={handleUpdatePlant} />
+      <PlantList plants={filteredPlants} onUpdatePlant={handleUpdatePlant} onDeletePlant={handleDeletePlant} />
     </main>
   );
 }
