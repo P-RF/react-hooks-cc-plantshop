@@ -12,18 +12,20 @@ function App() {
     fetch("http://localhost:6001/plants")
     .then(r => r.json())
     .then(data => {
-      setPlants(data);
+      setPlants(Array.isArray(data) ? data : [data]);
       setIsLoading(false);
     })
-    .catch(() => setIsLoading(false));
+    .catch((error) => {
+      setIsLoading(false)
+    })
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="app">
       <Header />
-      <PlantPage plants={plants} />
+      <PlantPage plants={plants} setPlants={setPlants} />
+      {isLoading && <p>Loading...</p>}
     </div>
   );
 }
