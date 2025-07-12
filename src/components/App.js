@@ -12,7 +12,7 @@ function App() {
     fetch("http://localhost:6001/plants")
     .then(r => r.json())
     .then(data => {
-      setPlants(Array.isArray(data) ? data : [data]);
+      setPlants(data);
       setIsLoading(false);
     })
     .catch((error) => {
